@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Drawer } from 'material-ui';
 import LoginForm from './LoginForm';
 import SettingPage from './SettingPage';
 import Header from './Header';
@@ -14,6 +15,7 @@ class App extends Component {
       currentPage: 'setting',
       loggedIn: 'null',
       list: [],
+      sidebarOpen: false,
     };
   }
 
@@ -72,6 +74,10 @@ class App extends Component {
     this.setState({ currentPage: destination });
   }
 
+  handleToggle() {
+    this.setState({ sidebarOpen: !this.state.sidebarOpen });
+  }
+
   renderContent() {
     if (this.state.currentPage === 'memo') {
       return (
@@ -94,6 +100,12 @@ class App extends Component {
         <MuiThemeProvider>
           <div>
             <SettingPage />
+            <Drawer
+              docked={false}
+              width={200}
+              open={this.state.sidebarOpen}
+              onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
+            />
           </div>
         </MuiThemeProvider>
       );
