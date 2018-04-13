@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import { List, ListItem } from 'material-ui/List';
+import CreateNewItem from 'material-ui/svg-icons/content/create';
+import ShowList from 'material-ui/svg-icons/action/reorder';
+import Settings from 'material-ui/svg-icons/action/settings';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Drawer } from 'material-ui';
+import { AppBar, Drawer } from 'material-ui';
 import LoginForm from './LoginForm';
 import SettingPage from './SettingPage';
 import Header from './Header';
@@ -75,6 +79,7 @@ class App extends Component {
   }
 
   handleToggle() {
+    console.log('clicked');
     this.setState({ sidebarOpen: !this.state.sidebarOpen });
   }
 
@@ -84,6 +89,30 @@ class App extends Component {
         <MuiThemeProvider>
           <div>
             <div>memo page</div>
+            <Drawer
+              docked={false}
+              width={200}
+              open={this.state.sidebarOpen}
+              onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
+            >
+              <List>
+                <ListItem
+                  primaryText="Create"
+                  leftIcon={<CreateNewItem />}
+                  onClick={() => this.setState({ currentPage: 'memo' })}
+                />
+                <ListItem
+                  primaryText="List"
+                  leftIcon={<ShowList />}
+                  onClick={() => this.setState({ currentPage: 'list' })}
+                />
+                <ListItem
+                  primaryText="Setting"
+                  leftIcon={<Settings />}
+                  onClick={() => this.setState({ currentPage: 'setting' })}
+                />
+              </List>
+            </Drawer>
           </div>
         </MuiThemeProvider>
       );
@@ -92,6 +121,30 @@ class App extends Component {
         <MuiThemeProvider>
           <div>
             <div>list page</div>
+            <Drawer
+              docked={false}
+              width={200}
+              open={this.state.sidebarOpen}
+              onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
+            >
+              <List>
+                <ListItem
+                  primaryText="Create"
+                  leftIcon={<CreateNewItem />}
+                  onClick={() => this.setState({ currentPage: 'memo' })}
+                />
+                <ListItem
+                  primaryText="List"
+                  leftIcon={<ShowList />}
+                  onClick={() => this.setState({ currentPage: 'list' })}
+                />
+                <ListItem
+                  primaryText="Setting"
+                  leftIcon={<Settings />}
+                  onClick={() => this.setState({ currentPage: 'setting' })}
+                />
+              </List>
+            </Drawer>
           </div>
         </MuiThemeProvider>
       );
@@ -105,7 +158,25 @@ class App extends Component {
               width={200}
               open={this.state.sidebarOpen}
               onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
-            />
+            >
+              <List>
+                <ListItem
+                  primaryText="Create"
+                  leftIcon={<CreateNewItem />}
+                  onClick={() => this.setState({ currentPage: 'memo' })}
+                />
+                <ListItem
+                  primaryText="List"
+                  leftIcon={<ShowList />}
+                  onClick={() => this.setState({ currentPage: 'list' })}
+                />
+                <ListItem
+                  primaryText="Setting"
+                  leftIcon={<Settings />}
+                  onClick={() => this.setState({ currentPage: 'setting' })}
+                />
+              </List>
+            </Drawer>
           </div>
         </MuiThemeProvider>
       );
@@ -127,7 +198,13 @@ class App extends Component {
       case true:
         return (
           <div>
-            <Header />
+            <MuiThemeProvider>
+              <AppBar
+                title="faaculty"
+                onLeftIconButtonClick={() => this.handleToggle()}
+                iconClassNameRight="muidocs-icon-navigation-expand-more"
+              />
+            </MuiThemeProvider>
             {this.renderContent()}
             <Footer />
           </div>
