@@ -4,7 +4,7 @@ import Greeting from './Greeting.jsx';
 
 class App extends Component {
   render() {
-    return (<Greeting name={'Bob'} />);
+    return <Greeting name="Joddy" />;
   }
 }
 

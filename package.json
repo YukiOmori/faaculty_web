@@ -5,7 +5,7 @@
   "author": "Yuki Omori <yukiomori4211@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "./node_modules/.bin/webpack-dev-server"
+    "start": " nodemon ./node_modules/.bin/webpack-dev-server"
   },
   "dependencies": {
     "babel-core": "^6.26.0",
