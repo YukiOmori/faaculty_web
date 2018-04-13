@@ -2,18 +2,18 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import LoginForm from './LoginForm';
+import SettingPage from './SettingPage';
 import Header from './Header';
 import Footer from './Footer';
 import AppBarExampleIcon from './AppBarExampleIcon';
-import CardExampleExpandable from './CardExampleExpandable';
-import MyAwesomeReactComponent from './MyAwesomeReactComponent';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 'memo',
+      currentPage: 'setting',
       loggedIn: 'null',
+      list: [],
     };
   }
 
@@ -49,6 +49,25 @@ class App extends Component {
     });
   }
 
+  convertDitigalTimeToSlashTime(digit) {
+    const elements = digit.split(':');
+    const year = elements[0].slice(2);
+    const month = elements[1];
+    const date = elements[2];
+    return `${year}/${month}/${date}`;
+  }
+
+  // returnDigitalTime() {
+  //   const d = new Date();
+  //   const year = d.getFullYear();
+  //   const month = d.getMonth() <= 10 ? `0${d.getMonth() + 1}` : d.getMonth() + 1;
+  //   const day = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
+  //   const h = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+  //   const m = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+  //   const s = d.getSeconds() < 10 ? `0${d.getSeconds()}` : d.getSeconds();
+  //   return `${year}:${month}:${day}:${h}:${m}:${s}`;
+  // }
+
   changePageTo(destination) {
     this.setState({ currentPage: destination });
   }
@@ -57,19 +76,25 @@ class App extends Component {
     if (this.state.currentPage === 'memo') {
       return (
         <MuiThemeProvider>
-          <AppBarExampleIcon />
+          <div>
+            <div>memo page</div>
+          </div>
         </MuiThemeProvider>
       );
     } else if (this.state.currentPage === 'list') {
       return (
         <MuiThemeProvider>
-          <AppBarExampleIcon />
+          <div>
+            <div>list page</div>
+          </div>
         </MuiThemeProvider>
       );
     } else if (this.state.currentPage === 'setting') {
       return (
         <MuiThemeProvider>
-          <AppBarExampleIcon />
+          <div>
+            <SettingPage />
+          </div>
         </MuiThemeProvider>
       );
     }
@@ -78,19 +103,20 @@ class App extends Component {
       <MuiThemeProvider>
         <div>
           <AppBarExampleIcon />
-          <MyAwesomeReactComponent />
+          <div>lp</div>
         </div>
       </MuiThemeProvider>
     );
   }
 
   render() {
+    // console.log(this.state.currentPage);
     switch (this.state.loggedIn) {
       case true:
         return (
           <div>
             <Header />
-            {this.renderContent.bind(this)()}
+            {this.renderContent()}
             <Footer />
           </div>
         );

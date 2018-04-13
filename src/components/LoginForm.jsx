@@ -14,6 +14,9 @@ const styles = {
     marginRight: 'auto',
     marginLeft: 'auto',
   },
+  errorTextStyle: {
+    color: 'red',
+  },
 };
 
 class LoginForm extends Component {
@@ -29,7 +32,6 @@ class LoginForm extends Component {
 
   onButtonPress() {
     const { email, password } = this.state;
-    console.log('clicked');
 
     this.setState({ error: '', loading: true });
 
@@ -47,7 +49,6 @@ class LoginForm extends Component {
   }
 
   onLoginFail() {
-    console.log('fail');
     this.setState({ error: 'Authentication Failed', loading: false });
   }
 
@@ -90,6 +91,7 @@ class LoginForm extends Component {
             onChange={event => this.setState({ password: event.target.value })}
           />
           <Divider />
+          <div style={styles.errorTextStyle}>{this.state.error}</div>
           {this.renderButton.bind(this)()}
         </Paper>
         <div>Don't have an account?</div>
