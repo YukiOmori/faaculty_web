@@ -29,17 +29,25 @@ const styles = {
   },
 };
 const MemoPage = ({
-  fact, abstraction, application, setText, saveText,
+  fact, abstraction, application, title, setText, clearText, saveText,
 }) => (
   <div className="conatiner">
     <Paper sytle={styles.parentContainerStyle}>
       <div>
-        <TextField style={styles.titleStyle} hintText="気づきを一言で言うと？" />
+        <TextField
+          value={title}
+          onChange={e => setText(e.target.value, 'title')}
+          style={styles.titleStyle}
+          hintText="気づきを一言で言うと？"
+        />
       </div>
       <div className="button-container">
         <RaisedButton
           style={styles.buttonStyle}
-          onClick={() => saveText()}
+          onClick={() => {
+            saveText();
+            clearText();
+          }}
           label="SAVE"
           secondary
         />
@@ -51,7 +59,7 @@ const MemoPage = ({
             value={fact}
             multiLine
             rows={1}
-            onChange={event => setText(event.target.value, 'fact')}
+            onChange={e => setText(e.target.value, 'fact')}
           />
         </Paper>
         <Paper style={styles.memoStyle}>
@@ -60,7 +68,7 @@ const MemoPage = ({
             value={abstraction}
             multiLine
             rows={1}
-            onChange={event => setText(event.target.value, 'fact')}
+            onChange={e => setText(e.target.value, 'abstraction')}
           />
         </Paper>
         <Paper style={styles.memoStyle}>
@@ -69,7 +77,7 @@ const MemoPage = ({
             value={application}
             multiLine
             rows={1}
-            onChange={event => setText(event.target.value, 'fact')}
+            onChange={e => setText(e.target.value, 'application')}
           />
         </Paper>
       </Paper>

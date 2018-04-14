@@ -41,9 +41,10 @@ class App extends Component {
       loggedIn: 'null',
       list: [],
       sidebarOpen: false,
-      fact: 'aiueo',
-      abstraction: 'kakikukeko',
-      application: 'sashisuseso',
+      fact: '',
+      abstraction: '',
+      application: '',
+      title: '',
     };
   }
 
@@ -80,12 +81,32 @@ class App extends Component {
   }
 
   setText(text, label) {
-    if (label === 'fact') {
-      this.setState({
-        fact: text,
-      });
-      console.log(this.state.fact);
+    switch (label) {
+      case 'fact':
+        this.setState({ fact: text });
+        break;
+      case 'abstraction':
+        this.setState({ abstraction: text });
+        break;
+      case 'application':
+        this.setState({ application: text });
+        break;
+      case 'title':
+        this.setState({ title: text });
+        break;
+      default:
+        break;
     }
+  }
+
+  clearText() {
+    this.setState({
+      fact: '',
+      abstraction: '',
+      application: '',
+      title: '',
+    });
+    console.log('text cleared');
   }
 
   saveText() {
@@ -107,7 +128,6 @@ class App extends Component {
   }
 
   handleToggle() {
-    console.log('clicked');
     this.setState({ sidebarOpen: !this.state.sidebarOpen });
   }
 
@@ -117,8 +137,10 @@ class App extends Component {
         <MuiThemeProvider>
           <div>
             <MemoPage
-              setText={() => this.setText()}
+              setText={(text, label) => this.setText(text, label)}
+              clearText={() => this.clearText()}
               saveText={() => this.saveText()}
+              title={this.state.title}
               fact={this.state.fact}
               abstraction={this.state.abstraction}
               application={this.state.application}
