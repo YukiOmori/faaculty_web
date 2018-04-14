@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import firebase from 'firebase';
 import { List, ListItem } from 'material-ui/List';
 import CreateNewItem from 'material-ui/svg-icons/content/create';
-import ShowList from 'material-ui/svg-icons/action/reorder';
+import ShowList from 'material-ui/svg-icons/action/view-column';
 import Settings from 'material-ui/svg-icons/action/settings';
+import Logout from 'material-ui/svg-icons/maps/directions-run';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { AppBar, Drawer } from 'material-ui';
+import { AppBar, Drawer, Divider } from 'material-ui';
 import LoginForm from './LoginForm';
 import SettingPage from './SettingPage';
 import Header from './Header';
@@ -99,17 +100,29 @@ class App extends Component {
                 <ListItem
                   primaryText="Create"
                   leftIcon={<CreateNewItem />}
-                  onClick={() => this.setState({ currentPage: 'memo' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'memo', sidebarOpen: !this.state.sidebarOpen })
+                  }
                 />
                 <ListItem
                   primaryText="List"
                   leftIcon={<ShowList />}
-                  onClick={() => this.setState({ currentPage: 'list' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'list', sidebarOpen: !this.state.sidebarOpen })
+                  }
                 />
                 <ListItem
                   primaryText="Setting"
                   leftIcon={<Settings />}
-                  onClick={() => this.setState({ currentPage: 'setting' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'setting', sidebarOpen: !this.state.sidebarOpen })
+                  }
+                />
+                <Divider />
+                <ListItem
+                  primaryText="Log Out"
+                  leftIcon={<Logout />}
+                  onClick={() => firebase.auth().signOut()}
                 />
               </List>
             </Drawer>
@@ -131,17 +144,29 @@ class App extends Component {
                 <ListItem
                   primaryText="Create"
                   leftIcon={<CreateNewItem />}
-                  onClick={() => this.setState({ currentPage: 'memo' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'memo', sidebarOpen: !this.state.sidebarOpen })
+                  }
                 />
                 <ListItem
                   primaryText="List"
                   leftIcon={<ShowList />}
-                  onClick={() => this.setState({ currentPage: 'list' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'list', sidebarOpen: !this.state.sidebarOpen })
+                  }
                 />
                 <ListItem
                   primaryText="Setting"
                   leftIcon={<Settings />}
-                  onClick={() => this.setState({ currentPage: 'setting' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'setting', sidebarOpen: !this.state.sidebarOpen })
+                  }
+                />
+                <Divider />
+                <ListItem
+                  primaryText="Log Out"
+                  leftIcon={<Logout />}
+                  onClick={() => firebase.auth().signOut()}
                 />
               </List>
             </Drawer>
@@ -163,17 +188,30 @@ class App extends Component {
                 <ListItem
                   primaryText="Create"
                   leftIcon={<CreateNewItem />}
-                  onClick={() => this.setState({ currentPage: 'memo' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'memo', sidebarOpen: !this.state.sidebarOpen })
+                  }
                 />
                 <ListItem
                   primaryText="List"
                   leftIcon={<ShowList />}
-                  onClick={() => this.setState({ currentPage: 'list' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'list', sidebarOpen: !this.state.sidebarOpen })
+                  }
                 />
                 <ListItem
                   primaryText="Setting"
                   leftIcon={<Settings />}
-                  onClick={() => this.setState({ currentPage: 'setting' })}
+                  onClick={() =>
+                    this.setState({ currentPage: 'setting', sidebarOpen: !this.state.sidebarOpen })
+                  }
+                />
+
+                <Divider />
+                <ListItem
+                  primaryText="Log Out"
+                  leftIcon={<Logout />}
+                  onClick={() => firebase.auth().signOut()}
                 />
               </List>
             </Drawer>
