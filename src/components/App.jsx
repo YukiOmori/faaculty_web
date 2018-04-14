@@ -8,19 +8,42 @@ import Logout from 'material-ui/svg-icons/maps/directions-run';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { AppBar, Drawer, Divider } from 'material-ui';
 import LoginForm from './LoginForm';
+import MemoPage from './MemoPage';
 import SettingPage from './SettingPage';
 import Header from './Header';
 import Footer from './Footer';
 import AppBarExampleIcon from './AppBarExampleIcon';
 
+const returnDigitalTime = () => {
+  const d = new Date();
+  const year = d.getFullYear();
+  const month = d.getMonth() <= 10 ? `0${d.getMonth() + 1}` : d.getMonth() + 1;
+  const day = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
+  const h = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
+  const m = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
+  const s = d.getSeconds() < 10 ? `0${d.getSeconds()}` : d.getSeconds();
+  return `${year}:${month}:${day}:${h}:${m}:${s}`;
+};
+
+const convertDitigalTimeToSlashTime = (digit) => {
+  const elements = digit.split(':');
+  const year = elements[0].slice(2);
+  const month = elements[1];
+  const date = elements[2];
+  return `${year}/${month}/${date}`;
+};
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 'setting',
+      currentPage: 'memo',
       loggedIn: 'null',
       list: [],
       sidebarOpen: false,
+      fact: 'aiueo',
+      abstraction: 'kakikukeko',
+      application: 'sashisuseso',
     };
   }
 
@@ -44,7 +67,7 @@ class App extends Component {
         db.ref(path).on('child_added', (data) => {
           const memo = data.val();
           listArray.unshift({
-            date: this.convertDitigalTimeToSlashTime(memo.date),
+            date: convertDitigalTimeToSlashTime(memo.date),
             title: memo.title ? memo.title : 'No Title',
             id: memo.date,
           });
@@ -56,24 +79,28 @@ class App extends Component {
     });
   }
 
-  convertDitigalTimeToSlashTime(digit) {
-    const elements = digit.split(':');
-    const year = elements[0].slice(2);
-    const month = elements[1];
-    const date = elements[2];
-    return `${year}/${month}/${date}`;
+  setText(text, label) {
+    if (label === 'fact') {
+      this.setState({
+        fact: text,
+      });
+      console.log(this.state.fact);
+    }
   }
 
-  // returnDigitalTime() {
-  //   const d = new Date();
-  //   const year = d.getFullYear();
-  //   const month = d.getMonth() <= 10 ? `0${d.getMonth() + 1}` : d.getMonth() + 1;
-  //   const day = d.getDate() < 10 ? `0${d.getDate()}` : d.getDate();
-  //   const h = d.getHours() < 10 ? `0${d.getHours()}` : d.getHours();
-  //   const m = d.getMinutes() < 10 ? `0${d.getMinutes()}` : d.getMinutes();
-  //   const s = d.getSeconds() < 10 ? `0${d.getSeconds()}` : d.getSeconds();
-  //   return `${year}:${month}:${day}:${h}:${m}:${s}`;
-  // }
+  saveText() {
+    const db = firebase.database();
+    const userId = firebase.auth().currentUser.uid;
+    const date = returnDigitalTime();
+    const path = `user/${userId}/${date}`;
+    db.ref(path).set({
+      date,
+      fact: this.state.fact,
+      abstraction: this.state.abstraction,
+      application: this.state.application,
+      title: this.state.title ? this.state.title : 'No Title',
+    });
+  }
 
   changePageTo(destination) {
     this.setState({ currentPage: destination });
@@ -89,7 +116,13 @@ class App extends Component {
       return (
         <MuiThemeProvider>
           <div>
-            <div>memo page</div>
+            <MemoPage
+              setText={() => this.setText()}
+              saveText={() => this.saveText()}
+              fact={this.state.fact}
+              abstraction={this.state.abstraction}
+              application={this.state.application}
+            />
             <Drawer
               docked={false}
               width={200}
