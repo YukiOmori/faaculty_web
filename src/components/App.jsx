@@ -9,6 +9,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { AppBar, Drawer, Divider } from 'material-ui';
 import LoginForm from './LoginForm';
 import MemoPage from './MemoPage';
+import ListPage from './ListPage';
 import SettingPage from './SettingPage';
 import Header from './Header';
 import Footer from './Footer';
@@ -30,17 +31,21 @@ const convertDitigalTimeToSlashTime = (digit) => {
   const year = elements[0].slice(2);
   const month = elements[1];
   const date = elements[2];
-  return `${year}/${month}/${date}`;
+  const h = elements[2];
+  const m = elements[3];
+  const s = elements[4];
+  return `${year}/${month}/${date} ${h}:${m}:${s}`;
 };
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 'memo',
+      currentPage: 'list',
       loggedIn: 'null',
       list: [],
       sidebarOpen: false,
+      id: '',
       fact: '',
       abstraction: '',
       application: '',
@@ -70,6 +75,9 @@ class App extends Component {
           listArray.unshift({
             date: convertDitigalTimeToSlashTime(memo.date),
             title: memo.title ? memo.title : 'No Title',
+            fact: memo.fact,
+            abstraction: memo.abstraction,
+            application: memo.application,
             id: memo.date,
           });
           this.setState({ list: listArray });
@@ -101,18 +109,18 @@ class App extends Component {
 
   clearText() {
     this.setState({
+      id: '',
       fact: '',
       abstraction: '',
       application: '',
       title: '',
     });
-    console.log('text cleared');
   }
 
-  saveText() {
+  saveText(id) {
     const db = firebase.database();
     const userId = firebase.auth().currentUser.uid;
-    const date = returnDigitalTime();
+    const date = id || returnDigitalTime();
     const path = `user/${userId}/${date}`;
     db.ref(path).set({
       date,
@@ -127,6 +135,25 @@ class App extends Component {
     this.setState({ currentPage: destination });
   }
 
+  changeToEditMode(data) {
+    this.setState({
+      currentPage: 'memo',
+      id: data.id,
+      title: data.title,
+      fact: data.fact,
+      abstraction: data.abstraction,
+      application: data.application,
+    });
+  }
+
+  dltData(id) {
+    const db = firebase.database();
+    const userId = firebase.auth().currentUser.uid;
+    const date = id;
+    const path = `user/${userId}/${date}`;
+    db.ref(path).remove();
+  }
+
   handleToggle() {
     this.setState({ sidebarOpen: !this.state.sidebarOpen });
   }
@@ -139,7 +166,8 @@ class App extends Component {
             <MemoPage
               setText={(text, label) => this.setText(text, label)}
               clearText={() => this.clearText()}
-              saveText={() => this.saveText()}
+              saveText={id => this.saveText(id)}
+              id={this.state.id}
               title={this.state.title}
               fact={this.state.fact}
               abstraction={this.state.abstraction}
@@ -188,7 +216,13 @@ class App extends Component {
       return (
         <MuiThemeProvider>
           <div>
-            <div>list page</div>
+            <ListPage
+              list={this.state.list}
+              changeToEditMode={(ttl, fct, abst, appl) =>
+                this.changeToEditMode(ttl, fct, abst, appl)
+              }
+              dltData={id => this.dltData(id)}
+            />
             <Drawer
               docked={false}
               width={200}
@@ -299,7 +333,6 @@ class App extends Component {
               />
             </MuiThemeProvider>
             {this.renderContent()}
-            <Footer />
           </div>
         );
       case false:

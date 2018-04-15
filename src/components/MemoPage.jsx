@@ -29,7 +29,7 @@ const styles = {
   },
 };
 const MemoPage = ({
-  fact, abstraction, application, title, setText, clearText, saveText,
+  id, title, fact, abstraction, application, setText, clearText, saveText,
 }) => (
   <div className="conatiner">
     <Paper sytle={styles.parentContainerStyle}>
@@ -45,7 +45,7 @@ const MemoPage = ({
         <RaisedButton
           style={styles.buttonStyle}
           onClick={() => {
-            saveText();
+            saveText(id);
             clearText();
           }}
           label="SAVE"

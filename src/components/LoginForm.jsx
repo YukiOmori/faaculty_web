@@ -91,7 +91,7 @@ class LoginForm extends Component {
             onChange={event => this.setState({ password: event.target.value })}
           />
           <Divider />
-          <div style={styles.errorTextStyle}>{this.state.error}</div>
+          <div>{this.state.error}</div>
           {this.renderButton.bind(this)()}
         </Paper>
         <div>Don't have an account?</div>
