@@ -342,7 +342,6 @@ class App extends Component {
   }
 
   render() {
-    // console.log(this.state.currentPage);
     switch (this.state.loggedIn) {
       case true:
         return (

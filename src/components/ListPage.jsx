@@ -41,12 +41,6 @@ class ListPage extends Component {
       deselectOnClickaway: true,
       showCheckboxes: false,
       height: '300px',
-      clickedData: {
-        title: '',
-        fact: '',
-        abstraction: '',
-        application: '',
-      },
     };
   }
 
@@ -132,7 +126,9 @@ class ListPage extends Component {
                     <FlatButton
                       secondary
                       label={<DeleteItem />}
-                      onClick={() => this.handleOnClickDelete(row.id)}
+                      onClick={() => {
+                        this.handleOnClickDelete(row.id);
+                      }}
                     />
                   </div>
                 </TableRowColumn>
