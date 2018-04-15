@@ -41,7 +41,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentPage: 'list',
+      currentPage: 'memo',
       loggedIn: 'null',
       list: [],
       sidebarOpen: false,
@@ -81,6 +81,28 @@ class App extends Component {
             id: memo.date,
           });
           this.setState({ list: listArray });
+        });
+        db.ref(path).on('child_changed', (data) => {
+          const memo = data.val();
+          listArray.unshift({
+            date: convertDitigalTimeToSlashTime(memo.date),
+            title: memo.title ? memo.title : 'No Title',
+            fact: memo.fact,
+            abstraction: memo.abstraction,
+            application: memo.application,
+            id: memo.date,
+          });
+          this.setState({ list: listArray });
+        });
+        db.ref(path).on('child_removed', (data) => {
+          const memo = data.val();
+          for (let i = 0; i < listArray.length; i++) {
+            if (listArray.id === memo.id) {
+              listArray.splice(i, 1);
+              this.setState({ list: listArray });
+              break;
+            }
+          }
         });
       } else {
         this.setState({ loggedIn: false });
