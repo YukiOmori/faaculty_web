@@ -28,6 +28,9 @@ const styles = {
     marginBotttom: 20,
     flex: 1,
   },
+  underlineStyle: {
+    borderColor: blue800,
+  },
 };
 
 class MemoPage extends Component {
@@ -66,6 +69,7 @@ class MemoPage extends Component {
               onChange={e => setText(e.target.value, 'title')}
               style={styles.titleStyle}
               hintText="気づきを一言で言うと？"
+              underlineFocusStyle={styles.underlineStyle}
             />
           </div>
           <div className="button-container">
@@ -111,6 +115,7 @@ class MemoPage extends Component {
                   multiLine
                   rows={1}
                   onChange={e => setText(e.target.value, 'fact')}
+                  underlineFocusStyle={styles.underlineStyle}
                 />
               </Paper>
             </div>
@@ -123,6 +128,7 @@ class MemoPage extends Component {
                   multiLine
                   rows={1}
                   onChange={e => setText(e.target.value, 'abstraction')}
+                  underlineFocusStyle={styles.underlineStyle}
                 />
               </Paper>
             </div>
@@ -130,11 +136,12 @@ class MemoPage extends Component {
               <div className="memo-title">Application</div>
               <Paper style={styles.memoStyle}>
                 <TextField
-                  hintText="他の領域に転用する事例を入力"
+                  hintText="転用の事例を入力"
                   value={application}
                   multiLine
                   rows={1}
                   onChange={e => setText(e.target.value, 'application')}
+                  underlineFocusStyle={styles.underlineStyle}
                 />
               </Paper>
             </div>

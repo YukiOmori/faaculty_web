@@ -29,7 +29,13 @@ class Header extends Component {
             style={{ backgroundColor: '#333' }}
             title="faaculty"
             showMenuIconButton={loggedIn || false}
-            iconElementLeft={<img className="header-logo" src="/images/icon.png" alt="icon.png" />}
+            iconElementLeft={
+              <div>
+                <a href="https://reverse-engineer/portfolio/faaculty">
+                  <img className="header-logo" src="/images/icon.png" alt="icon.png" />
+                </a>
+              </div>
+            }
             iconElementRight={this.renderMenuIcon()}
             onRightIconButtonClick={() => handleToggle()}
           />
