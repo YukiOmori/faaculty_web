@@ -72,7 +72,7 @@ class MemoPage extends Component {
             <div className="button-wrapper">
               <RaisedButton
                 style={styles.buttonStyle}
-                labelColor="#ccc"
+                labelColor="#fff"
                 backgroundColor={blue800}
                 onClick={() => {
                   saveText(id);
