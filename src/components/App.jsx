@@ -183,6 +183,11 @@ class App extends Component {
     this.setState({ sidebarOpen: !this.state.sidebarOpen });
   }
 
+  handleLogOut() {
+    this.setState({ sidebarOpen: false });
+    firebase.auth().signOut();
+  }
+
   renderContent() {
     if (this.state.currentPage === 'memo') {
       return (
@@ -230,7 +235,7 @@ class App extends Component {
                 <ListItem
                   primaryText="Log Out"
                   leftIcon={<Logout />}
-                  onClick={() => firebase.auth().signOut()}
+                  onClick={() => this.handleLogOut()}
                 />
               </List>
             </Drawer>
