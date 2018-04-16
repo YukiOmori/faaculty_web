@@ -206,6 +206,7 @@ class App extends Component {
             <Drawer
               docked={false}
               width={200}
+              openSecondary
               open={this.state.sidebarOpen}
               onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
             >
