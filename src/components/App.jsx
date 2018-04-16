@@ -346,13 +346,7 @@ class App extends Component {
       case true:
         return (
           <div>
-            <MuiThemeProvider>
-              <AppBar
-                title="faaculty"
-                onLeftIconButtonClick={() => this.handleToggle()}
-                iconClassNameRight="muidocs-icon-navigation-expand-more"
-              />
-            </MuiThemeProvider>
+            <Header loggedIn={this.state.loggedIn} handleToggle={() => this.handleToggle()} />
             {this.renderContent()}
           </div>
         );

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { Card, CardActions, CardHeader } from 'material-ui/Card';
-import { Paper, Divider, RaisedButton, FlatButton, TextField } from 'material-ui';
+import { Card } from 'material-ui/Card';
+import { Paper, Divider, RaisedButton, TextField } from 'material-ui';
+import { blue800 } from 'material-ui/styles/colors';
 
 const styles = {
   textStyle: {
@@ -67,7 +68,15 @@ class LoginForm extends Component {
       //   return <Spinner size="small" />;
       return <div>now loading...</div>;
     }
-    return <RaisedButton onClick={() => this.onButtonPress()} label="Login" primary fullWidth />;
+    return (
+      <RaisedButton
+        labelColor="#ccc"
+        backgroundColor={blue800}
+        onClick={() => this.onButtonPress()}
+        label="Login"
+        fullWidth
+      />
+    );
   }
 
   render() {
