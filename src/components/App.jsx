@@ -14,6 +14,7 @@ import SigninForm from './SigninForm';
 import MemoPage from './MemoPage';
 import ListPage from './ListPage';
 import SettingPage from './SettingPage';
+import SideBar from './SideBar';
 import Header from './Header';
 import AppBarExampleIcon from './AppBarExampleIcon';
 
@@ -188,6 +189,14 @@ class App extends Component {
     firebase.auth().signOut();
   }
 
+  handleRequestChange(open) {
+    this.setState({ sidebarOpen: open });
+  }
+
+  changePageToFromSideBar(destination) {
+    this.setState({ currentPage: destination, sidebarOpen: !this.state.sidebarOpen });
+  }
+
   renderContent() {
     if (this.state.currentPage === 'memo') {
       return (
@@ -203,43 +212,12 @@ class App extends Component {
               abstraction={this.state.abstraction}
               application={this.state.application}
             />
-            <Drawer
-              docked={false}
-              width={200}
-              openSecondary
-              open={this.state.sidebarOpen}
-              onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
-            >
-              <List>
-                <ListItem
-                  primaryText="Create"
-                  leftIcon={<CreateNewItem />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'memo', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <ListItem
-                  primaryText="List"
-                  leftIcon={<ShowList />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'list', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <ListItem
-                  primaryText="Setting"
-                  leftIcon={<Settings />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'setting', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <Divider />
-                <ListItem
-                  primaryText="Log Out"
-                  leftIcon={<Logout />}
-                  onClick={() => this.handleLogOut()}
-                />
-              </List>
-            </Drawer>
+            <SideBar
+              sidebarOpen={this.state.sidebarOpen}
+              changePageToFromSideBar={destination => this.changePageToFromSideBar(destination)}
+              handleRequestChange={open => this.handleRequestChange(open)}
+              handleLogOut={() => this.handleLogOut()}
+            />
           </div>
         </MuiThemeProvider>
       );
@@ -254,42 +232,12 @@ class App extends Component {
               }
               dltData={id => this.dltData(id)}
             />
-            <Drawer
-              docked={false}
-              width={200}
-              open={this.state.sidebarOpen}
-              onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
-            >
-              <List>
-                <ListItem
-                  primaryText="Create"
-                  leftIcon={<CreateNewItem />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'memo', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <ListItem
-                  primaryText="List"
-                  leftIcon={<ShowList />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'list', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <ListItem
-                  primaryText="Setting"
-                  leftIcon={<Settings />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'setting', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <Divider />
-                <ListItem
-                  primaryText="Log Out"
-                  leftIcon={<Logout />}
-                  onClick={() => firebase.auth().signOut()}
-                />
-              </List>
-            </Drawer>
+            <SideBar
+              sidebarOpen={this.state.sidebarOpen}
+              changePageToFromSideBar={destination => this.changePageToFromSideBar(destination)}
+              handleRequestChange={open => this.handleRequestChange(open)}
+              handleLogOut={() => this.handleLogOut()}
+            />
           </div>
         </MuiThemeProvider>
       );
@@ -298,43 +246,12 @@ class App extends Component {
         <MuiThemeProvider>
           <div>
             <SettingPage />
-            <Drawer
-              docked={false}
-              width={200}
-              open={this.state.sidebarOpen}
-              onRequestChange={sidebarOpen => this.setState({ sidebarOpen })}
-            >
-              <List>
-                <ListItem
-                  primaryText="Create"
-                  leftIcon={<CreateNewItem />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'memo', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <ListItem
-                  primaryText="List"
-                  leftIcon={<ShowList />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'list', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-                <ListItem
-                  primaryText="Setting"
-                  leftIcon={<Settings />}
-                  onClick={() =>
-                    this.setState({ currentPage: 'setting', sidebarOpen: !this.state.sidebarOpen })
-                  }
-                />
-
-                <Divider />
-                <ListItem
-                  primaryText="Log Out"
-                  leftIcon={<Logout />}
-                  onClick={() => firebase.auth().signOut()}
-                />
-              </List>
-            </Drawer>
+            <SideBar
+              sidebarOpen={this.state.sidebarOpen}
+              changePageToFromSideBar={destination => this.changePageToFromSideBar(destination)}
+              handleRequestChange={open => this.handleRequestChange(open)}
+              handleLogOut={() => this.handleLogOut()}
+            />
           </div>
         </MuiThemeProvider>
       );
