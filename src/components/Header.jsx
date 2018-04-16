@@ -23,20 +23,18 @@ class Header extends Component {
   render() {
     const { handleToggle, loggedIn } = this.props;
     return (
-      <MuiThemeProvider>
-        <AppBar
-          style={{ backgroundColor: '#333' }}
-          title="faaculty"
-          showMenuIconButton={loggedIn || false}
-          iconElementLeft={
-            <IconButton>
-              <img src="" alt="" />
-            </IconButton>
-          }
-          iconElementRight={this.renderMenuIcon()}
-          onRightIconButtonClick={() => handleToggle()}
-        />
-      </MuiThemeProvider>
+      <div>
+        <MuiThemeProvider>
+          <AppBar
+            style={{ backgroundColor: '#333' }}
+            title="faaculty"
+            showMenuIconButton={loggedIn || false}
+            iconElementLeft={<img className="header-logo" src="/images/icon.png" alt="icon.png" />}
+            iconElementRight={this.renderMenuIcon()}
+            onRightIconButtonClick={() => handleToggle()}
+          />
+        </MuiThemeProvider>
+      </div>
     );
   }
 }
