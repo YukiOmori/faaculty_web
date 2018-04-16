@@ -34,9 +34,9 @@ const convertDitigalTimeToSlashTime = (digit) => {
   const year = elements[0].slice(2);
   const month = elements[1];
   const date = elements[2];
-  const h = elements[2];
-  const m = elements[3];
-  const s = elements[4];
+  const h = elements[3];
+  const m = elements[4];
+  const s = elements[5];
   return `${year}/${month}/${date} ${h}:${m}:${s}`;
 };
 
@@ -101,8 +101,7 @@ class App extends Component {
         db.ref(path).on('child_removed', (data) => {
           const memo = data.val();
           for (let i = 0; i < listArray.length; i++) {
-            if (listArray.id === memo.id) {
-              listArray.splice(i, 1);
+            if (listArray[i].id === memo.date) {
               this.setState({ list: listArray });
               break;
             }
