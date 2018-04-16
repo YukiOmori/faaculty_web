@@ -1,11 +1,16 @@
 .button-container {
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .button-wrapper {
   margin-right: 10px;
+}
+
+.title-container {
+  text-align: center;
 }
 
 .memo-column {

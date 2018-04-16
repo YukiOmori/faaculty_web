@@ -15,7 +15,7 @@ const styles = {
     paddingTop: 20,
     marginBottom: 20,
     paddingRight: 100,
-    paddingLeft: 100,
+    paddingLeft: 0,
   },
   buttonStyle: {
     flex: 1,
@@ -60,51 +60,51 @@ class MemoPage extends Component {
     } = this.props;
     return (
       <div className="conatiner">
+        <div className="button-container">
+          <div className="button-wrapper">
+            <RaisedButton
+              style={styles.buttonStyle}
+              labelColor="#fff"
+              backgroundColor={blue800}
+              onClick={() => {
+                saveText(id);
+                clearText();
+                this.setState({ saveNotificationOpen: true });
+              }}
+              label="SAVE"
+            />
+            <Snackbar
+              open={this.state.saveNotificationOpen}
+              message="メモを保存しました"
+              autoHideDuration={4000}
+              onRequestClose={() => this.setState({ saveNotificationOpen: false })}
+            />
+          </div>
+
+          <div className="button-wrapper">
+            <RaisedButton label="CANCEL" onClick={() => this.handleOpen()} />
+            <Dialog
+              actions={actions}
+              modal={false}
+              open={this.state.dialogOpen}
+              onRequestClose={() => this.handleClose()}
+            >
+              編集中の内容を破棄しますか？
+            </Dialog>
+          </div>
+        </div>
         <Paper sytle={styles.parentContainerStyle}>
-          <div>
+          <div className="title-container">
             <div className="memo-title">Summary</div>
             <TextField
               value={title}
               onChange={e => setText(e.target.value, 'title')}
               style={styles.titleStyle}
-              fullWidth
               hintText="気づきを一言で言うと？"
               underlineFocusStyle={styles.underlineStyle}
             />
           </div>
-          <div className="button-container">
-            <div className="button-wrapper">
-              <RaisedButton
-                style={styles.buttonStyle}
-                labelColor="#fff"
-                backgroundColor={blue800}
-                onClick={() => {
-                  saveText(id);
-                  clearText();
-                  this.setState({ saveNotificationOpen: true });
-                }}
-                label="SAVE"
-              />
-              <Snackbar
-                open={this.state.saveNotificationOpen}
-                message="メモを保存しました"
-                autoHideDuration={4000}
-                onRequestClose={() => this.setState({ saveNotificationOpen: false })}
-              />
-            </div>
 
-            <div className="button-wrapper">
-              <RaisedButton label="CANCEL" onClick={() => this.handleOpen()} />
-              <Dialog
-                actions={actions}
-                modal={false}
-                open={this.state.dialogOpen}
-                onRequestClose={() => this.handleClose()}
-              >
-                編集中の内容を破棄しますか？
-              </Dialog>
-            </div>
-          </div>
           <Paper style={styles.childContainerStyle}>
             <div className="memo-column">
               <div className="memo-title">Fact</div>
