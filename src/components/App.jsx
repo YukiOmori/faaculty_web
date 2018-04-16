@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
 import { List, ListItem } from 'material-ui/List';
+import CircularProgress from 'material-ui/CircularProgress';
 import CreateNewItem from 'material-ui/svg-icons/content/create';
 import ShowList from 'material-ui/svg-icons/action/view-column';
 import Settings from 'material-ui/svg-icons/action/settings';
 import Logout from 'material-ui/svg-icons/maps/directions-run';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { AppBar, Drawer, Divider } from 'material-ui';
+import { blue800 } from 'material-ui/styles/colors';
+import { Drawer, Divider } from 'material-ui';
 import LoginForm from './LoginForm';
+import SigninForm from './SigninForm';
 import MemoPage from './MemoPage';
 import ListPage from './ListPage';
 import SettingPage from './SettingPage';
 import Header from './Header';
-import Footer from './Footer';
 import AppBarExampleIcon from './AppBarExampleIcon';
 
 const returnDigitalTime = () => {
@@ -42,6 +44,7 @@ class App extends Component {
     super(props);
     this.state = {
       currentPage: 'memo',
+      currentForm: 'login',
       loggedIn: 'null',
       list: [],
       sidebarOpen: false,
@@ -80,7 +83,7 @@ class App extends Component {
             application: memo.application,
             id: memo.date,
           });
-          this.setState({ list: listArray });
+          this.setState({ list: listArray, currentPage: 'memo' });
         });
         db.ref(path).on('child_changed', (data) => {
           const memo = data.val();
@@ -154,7 +157,7 @@ class App extends Component {
   }
 
   changePageTo(destination) {
-    this.setState({ currentPage: destination });
+    this.setState({ currentForm: destination });
   }
 
   changeToEditMode(data) {
@@ -351,12 +354,12 @@ class App extends Component {
           </div>
         );
       case false:
-        if (this.state.currentPage === 'login') {
+        if (this.state.currentForm === 'login') {
           return (
             <div>
               <Header />
               <MuiThemeProvider>
-                <LoginForm changePageTo={this.changePageTo.bind(this)} />
+                <LoginForm changePageTo={destination => this.changePageTo(destination)} />
               </MuiThemeProvider>
             </div>
           );
@@ -365,12 +368,12 @@ class App extends Component {
           <div>
             <Header />
             <MuiThemeProvider>
-              <LoginForm changePageTo={this.changePageTo.bind(this)} />
+              <SigninForm changePageTo={destination => this.changePageTo(destination)} />
             </MuiThemeProvider>
           </div>
         );
       default:
-        return <div>Loading</div>;
+        return <div className="circulator-container">Now Loading</div>;
     }
   }
 }

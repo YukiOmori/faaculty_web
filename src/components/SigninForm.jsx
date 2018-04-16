@@ -20,51 +20,63 @@ const styles = {
   },
 };
 
-class LoginForm extends Component {
+class SigninForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
+      passwordConfirmation: '',
       error: '',
       loading: false,
     };
   }
 
-  onLoginButtonPress() {
-    const { email, password } = this.state;
+  onSigninButtonPress() {
+    const { email, password, passwordConfirmation } = this.state;
 
     this.setState({ error: '', loading: true });
 
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(this.onLoginSuccess.bind(this))
-      .catch(() => {
-        firebase
-          .auth()
-          .createUserWithEmailAndPassword(email, password)
-          .then(this.onLoginSuccess.bind(this))
-          .catch(this.onLoginFail.bind(this));
-      });
+    if (email !== '' && password === passwordConfirmation) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(this.onSigninSuccess.bind(this))
+        .catch(() => {
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(this.onSigninSuccess.bind(this))
+            .catch(this.onSigninFail.bind(this));
+        });
+    } else {
+      this.onSigninFail.bind(this)('password');
+    }
   }
 
   onSwitchButtonPress() {
-    this.props.changePageTo('signin');
+    this.props.changePageTo('login');
   }
 
-  onLoginFail() {
-    this.setState({ error: 'Authentication Failed', loading: false });
+  onSigninFail(e) {
+    if (e === 'password') {
+      this.setState({ error: 'Check your email or password.', loading: false });
+    } else {
+      this.setState({ error: 'System Error. Please try again.', loading: false });
+    }
   }
 
-  onLoginSuccess() {
+  onSigninSuccess() {
     this.setState({
       email: '',
       password: '',
+      passwordConfirmation: '',
       error: '',
       loading: false,
     });
+    this.props.changePageTo('login');
   }
+
   renderErrorMessage() {
     if (this.state.error) {
       return <div className="error-message-container">{this.state.error}</div>;
@@ -85,15 +97,14 @@ class LoginForm extends Component {
         <RaisedButton
           labelColor="#ccc"
           backgroundColor={blue800}
-          onClick={() => this.onLoginButtonPress()}
-          label="Login"
+          onClick={() => this.onSigninButtonPress()}
+          label="Sign In"
           fullWidth
         />
         <RaisedButton
           labelColor="#ccc"
-          style={{ textTransform: 'capitalize' }}
           onClick={() => this.onSwitchButtonPress()}
-          label="Don't have an account?"
+          label="Already have an account?"
           fullWidth
         />
       </div>
@@ -105,7 +116,7 @@ class LoginForm extends Component {
       <div>
         <Paper zDepth={2} style={styles.paperStyle}>
           <AppBar
-            title="Please Login"
+            title="Please Signin"
             titleStyle={{ fontSize: 20 }}
             style={{
               backgroundColor: '#333',
@@ -130,6 +141,15 @@ class LoginForm extends Component {
             onChange={event => this.setState({ password: event.target.value })}
           />
           <Divider />
+          <TextField
+            hintText="Password (Confirm)"
+            type="password"
+            style={styles.textStyle}
+            underlineShow={false}
+            value={this.state.passwordConfirmation}
+            onChange={event => this.setState({ passwordConfirmation: event.target.value })}
+          />
+          <Divider />
           {this.renderErrorMessage()}
           {this.renderButtons()}
         </Paper>
@@ -138,4 +158,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default SigninForm;
