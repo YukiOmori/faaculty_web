@@ -16,7 +16,6 @@ const styles = {
     marginBottom: 20,
     paddingRight: 100,
     paddingLeft: 100,
-    width: 300,
   },
   buttonStyle: {
     flex: 1,
@@ -68,6 +67,7 @@ class MemoPage extends Component {
               value={title}
               onChange={e => setText(e.target.value, 'title')}
               style={styles.titleStyle}
+              fullWidth
               hintText="気づきを一言で言うと？"
               underlineFocusStyle={styles.underlineStyle}
             />
@@ -108,12 +108,14 @@ class MemoPage extends Component {
           <Paper style={styles.childContainerStyle}>
             <div className="memo-column">
               <div className="memo-title">Fact</div>
-              <Paper style={styles.memoStyle}>
+              <Paper style={styles.memoStyle} className="memo-container">
                 <TextField
                   hintText="気づいた事象を入力"
                   value={fact}
                   multiLine
                   rows={1}
+                  fullWidth
+                  underlineShow={false}
                   onChange={e => setText(e.target.value, 'fact')}
                   underlineFocusStyle={styles.underlineStyle}
                 />
@@ -121,12 +123,14 @@ class MemoPage extends Component {
             </div>
             <div className="memo-column">
               <div className="memo-title">Abstraction</div>
-              <Paper style={styles.memoStyle}>
+              <Paper style={styles.memoStyle} className="memo-container">
                 <TextField
                   hintText="Factを抽象化したことを入力"
                   value={abstraction}
                   multiLine
                   rows={1}
+                  fullWidth
+                  underlineShow={false}
                   onChange={e => setText(e.target.value, 'abstraction')}
                   underlineFocusStyle={styles.underlineStyle}
                 />
@@ -134,12 +138,14 @@ class MemoPage extends Component {
             </div>
             <div className="memo-column">
               <div className="memo-title">Application</div>
-              <Paper style={styles.memoStyle}>
+              <Paper style={styles.memoStyle} className="memo-container">
                 <TextField
                   hintText="転用の事例を入力"
                   value={application}
                   multiLine
                   rows={1}
+                  fullWidth
+                  underlineShow={false}
                   onChange={e => setText(e.target.value, 'application')}
                   underlineFocusStyle={styles.underlineStyle}
                 />
