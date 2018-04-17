@@ -101,7 +101,9 @@ class App extends Component {
         db.ref(path).on('child_removed', (data) => {
           const memo = data.val();
           for (let i = 0; i < listArray.length; i++) {
+            console.log(i, listArray[i], memo.date);
             if (listArray[i].id === memo.date) {
+              listArray.splice(i, 1);
               this.setState({ list: listArray });
               break;
             }
