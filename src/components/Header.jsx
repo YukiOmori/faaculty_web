@@ -9,6 +9,16 @@ class Header extends Component {
     this.state = {};
   }
 
+  renderLogoIcon() {
+    return (
+      <div>
+        <a href="https://reverse-engineer/portfolio/faaculty">
+          <img className="header-logo" src="/images/icon.png" alt="icon.png" />
+        </a>
+      </div>
+    );
+  }
+
   renderMenuIcon() {
     if (this.props.loggedIn) {
       return (
@@ -28,14 +38,7 @@ class Header extends Component {
           <AppBar
             style={{ backgroundColor: '#333' }}
             title="faaculty"
-            showMenuIconButton={loggedIn || false}
-            iconElementLeft={
-              <div>
-                <a href="https://reverse-engineer/portfolio/faaculty">
-                  <img className="header-logo" src="/images/icon.png" alt="icon.png" />
-                </a>
-              </div>
-            }
+            iconElementLeft={this.renderLogoIcon()}
             iconElementRight={this.renderMenuIcon()}
             onRightIconButtonClick={() => handleToggle()}
           />
