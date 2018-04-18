@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const publidDir = path.join(__dirname, '/public');
@@ -51,8 +52,13 @@ module.exports = [
             use: 'css-loader!sass-loader',
           }),
         },
+        {
+          // 追記
+          test: /\.(jpg|png)$/,
+          loaders: 'url-loader',
+        },
       ],
     },
-    plugins: [new ExtractTextPlugin('bundle.css')],
+    plugins: [new ExtractTextPlugin('bundle.css'), new webpack.optimize.UglifyJsPlugin()],
   },
 ];
