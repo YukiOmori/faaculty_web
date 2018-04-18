@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": " node ./node_modules/.bin/webpack-dev-server",
+    "build": "webpack",
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   },
   "dependencies": {
