@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
+import firebaseAuthInfo from '../settings/account';
 import { List, ListItem } from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
 import CreateNewItem from 'material-ui/svg-icons/content/create';
@@ -58,13 +59,21 @@ class App extends Component {
   }
 
   componentWillMount() {
+    const {
+      apiKey,
+      authDomain,
+      databaseURL,
+      projectId,
+      storageBucket,
+      messagingSenderId,
+    } = firebaseAuthInfo;
     firebase.initializeApp({
-      apiKey: 'AIzaSyA9jPAQ98zKEcgjiA6JwUWu9BjC4qGEVOw',
-      authDomain: 'faaculty-1c2c0.firebaseapp.com',
-      databaseURL: 'https://faaculty-1c2c0.firebaseio.com',
-      projectId: 'faaculty-1c2c0',
-      storageBucket: 'faaculty-1c2c0.appspot.com',
-      messagingSenderId: '809468660388',
+      apiKey,
+      authDomain,
+      databaseURL,
+      projectId,
+      storageBucket,
+      messagingSenderId,
     });
 
     firebase.auth().onAuthStateChanged((user) => {
